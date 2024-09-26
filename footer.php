@@ -22,7 +22,9 @@
                 <span class="short-text">ارتباط با ما:</span>
             </div>
 
-            <a href="https://wa.me/12502012020" class="phone-number">+1 (250) 201-2020</a>
+            <a href="<?php the_field('contact_phone_link', 'option'); ?>"
+                class="phone-number"><?php the_field('contact_phone', 'option'); ?>
+            </a>
         </div>
     </div>
 
@@ -31,7 +33,9 @@
         <?php if ($footer_top_items): ?>
             <?php foreach ($footer_top_items as $item): ?>
                 <div class="feature">
-                    <div class="icon"><?php echo get_svg($item['icon']); ?></div>
+                    <div class="icon">
+                        <img src="<?php echo $item['icon']; ?>">
+                    </div>
                     <div class="content">
                         <strong><?php echo esc_html($item['title']); ?></strong>
                         <p><?php echo esc_html($item['description']); ?></p>

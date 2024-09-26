@@ -22,32 +22,18 @@ function is_acf_active($pro_version = true)
     return $pro_version ? is_plugin_active('advanced-custom-fields-pro/acf.php') : is_plugin_active('advanced-custom-fields/acf.php');
 }
 
-/**
- * Is Ninja Forms plugin active?
- *
- * @return boolean
- */
-function is_nf_active()
+function product_breadcrumb($terms)
 {
-    return is_plugin_active('ninja-forms/ninja-forms.php');
-}
+    // اولین دسته‌بندی محصول را دریافت کن
+    $category = array_shift($terms); 
 
-/**
- * Show a message to inform about plugin inactivation.
- *
- * @param string $message Message to show.
- */
-function show_plugin_warning($message)
-{
-    echo '<div class="plugin-required-warning">' . $message . '</div>';
-}
+    // بررسی اگر دسته والد دارد
+    if ($category->parent != 0) {
+        $parent = get_term($category->parent, 'product_cat'); // دریافت دسته والد
+        echo '<a href="' . get_term_link($parent->term_id, 'product_cat') . '">' . $parent->name . '</a> / ';
+    }
 
+    // دسته محصول فعلی
+    echo '<a href="' . get_term_link($category->term_id, 'product_cat') . '">' . $category->name . '</a>';
 
-// For Convert Persian To Latin Numbers
-function convertNumbers($srting, $toPersian = false)
-{
-    $en_num = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-    $fa_num = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
-    if ($toPersian) return str_replace($en_num, $fa_num, $srting);
-    else return str_replace($fa_num, $en_num, $srting);
 }

@@ -34,3 +34,5 @@ require_once('inc/woocommerce.php');
 
 // Ajax functionalities
 require_once('inc/ajax.php');
+
+

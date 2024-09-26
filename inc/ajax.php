@@ -14,10 +14,21 @@ function search_products()
         while ($query->have_posts()) {
             $query->the_post();
 
-            // Get the URL of the full-sized image (you can specify a custom image size)
+            // بازیابی شیء محصول
+            $product = wc_get_product(get_the_ID());
+
+            // گرفتن قیمت محصول
+            $product_price = strip_tags(wc_price($product->get_price()));
+
+            // گرفتن آدرس تصویر محصول
             $image_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'small')[0];
 
-            echo '<a href="' . get_permalink() . '">' . get_the_title() . '<img src="' . $image_url . '" alt="Thumbnail"></a>';
+            // نمایش محصول با قیمت
+            echo '
+                    <a href="' . get_permalink() . '" class="item">
+                        <img src="' . $image_url . '" alt="' . get_the_title() . '">
+                        <p class="title">' . get_the_title() . '<span class="price">' . $product_price . '</span></p>
+                    </a>';
         }
         wp_reset_postdata();
     } else {
@@ -29,4 +40,3 @@ function search_products()
 
 add_action('wp_ajax_search_products', 'search_products');
 add_action('wp_ajax_nopriv_search_products', 'search_products');
-

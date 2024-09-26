@@ -6,7 +6,6 @@
 
 get_header(); ?>
 
-
 <div class="banner-suggestion-section">
     <div class="slider one-item-slider swiper-container">
 
@@ -39,7 +38,7 @@ get_header(); ?>
     </div>
 </div>
 
-<div class="products-section discounted">
+<div class="slider-products-section">
     <div class="title-flex">
         <h2 class="regular-title right">امین تایم</h2>
         <a href="" class="more-link"><span>لیست محصولات</span> <?php echo get_svg('chevron'); ?></a>
@@ -54,29 +53,25 @@ get_header(); ?>
             );
 
             $loop = new WP_Query($args);
-            if ($loop->have_posts()) {
+            if ($loop->have_posts()):
                 while ($loop->have_posts()):
                     $loop->the_post();
                     global $product;
 
-                    // تصویر محصول
                     $product_image = wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'single-post-thumbnail');
-
-                    // تعداد موجودی
                     $stock_quantity = $product->get_stock_quantity();
-
-                    $product_price = strip_tags(wc_price($product->get_price())); // قیمت محصول
+                    $product_price = strip_tags(wc_price($product->get_price()));
                     ?>
 
-                    <a href="<?php the_permalink(); ?>" class="item swiper-slide">
-                        <div class="discount-time">97:32:41</div>
+                    <a href="<?php the_permalink(); ?>" class="product-item swiper-slide">
+                        <!-- <div class="discount-time">97:32:41</div> -->
                         <div class="image" style="background-image: url('<?php echo $product_image[0]; ?>');"></div>
                         <h3><?php echo get_the_title(); ?></h3>
                         <span class="count"><?php echo ($stock_quantity ? $stock_quantity . ' عدد' : 'ناموجود'); ?></span>
-                        <div class="discount-flex">
+                        <!-- <div class="discount-flex">
                             <span class="discount-percent">4%</span>
                             <span class="previous-price">768, 0000 تومان</span>
-                        </div>
+                        </div> -->
                         <span class="price"><?php echo $product_price; ?></span>
                     </a>
                     <?php
@@ -88,9 +83,7 @@ get_header(); ?>
             <div class="swiper-button-next"><?php echo get_svg('chevron'); ?></div>
             <div class="swiper-button-prev"><?php echo get_svg('chevron'); ?></div>
             <?php
-            } else {
-                echo __('هیچ محصولی موجود نیست');
-            }
+            endif;
             wp_reset_postdata();
             ?>
     </div>
@@ -100,6 +93,43 @@ get_header(); ?>
     <a href="<?php echo get_field('single_ad_banner_link'); ?>">
         <img src="<?php echo get_field('single_ad_banner'); ?>">
     </a>
+</div>
+
+<div class="page-products-section">
+    <div class="title-flex">
+        <h2 class="regular-title right">محصولات ما</h2>
+        <a href="" class="more-link"><span>لیست محصولات</span> <?php echo get_svg('chevron'); ?></a>
+    </div>
+
+    <div class="products-container">
+        <?php
+        $args = array(
+            'post_type' => 'product',
+            'posts_per_page' => 9,
+        );
+
+        $loop = new WP_Query($args);
+        if ($loop->have_posts()):
+            while ($loop->have_posts()):
+                $loop->the_post();
+                global $product;
+                $product_image = wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'single-post-thumbnail');
+                $stock_quantity = $product->get_stock_quantity();
+                $product_price = strip_tags(wc_price($product->get_price()));
+                ?>
+
+                <a href="<?php the_permalink(); ?>" class="product-item swiper-slide">
+                    <div class="image" style="background-image: url('<?php echo $product_image[0]; ?>');"></div>
+                    <h3><?php echo get_the_title(); ?></h3>
+                    <span class="count"><?php echo ($stock_quantity ? $stock_quantity . ' عدد' : 'ناموجود'); ?></span>
+                    <span class="price"><?php echo $product_price; ?></span>
+                </a>
+                <?php
+            endwhile;
+        endif;
+        wp_reset_postdata();
+        ?>
+    </div>
 </div>
 
 

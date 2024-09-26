@@ -194,6 +194,193 @@
         "description": ""
     },
     {
+        "key": "group_66f43cc61a5df",
+        "title": "Product Attributes",
+        "fields": [
+            {
+                "key": "field_66f43cd4edeb8",
+                "label": "مشخصات محصول",
+                "name": "product_features",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_66f43d06edeba",
+                        "label": "عنوان",
+                        "name": "title",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_66f43d22edebb",
+                        "label": "مقدار",
+                        "name": "value",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_66f43d3d94082",
+                "label": "انتخاب رنگ",
+                "name": "in_colors",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "black": "سیاه",
+                    "gray": "خاکستری",
+                    "red": "قرمز",
+                    "white": "سفید",
+                    "blue": "آبی",
+                    "green": "سبز"
+                },
+                "default_value": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "array",
+                "placeholder": ""
+            },
+            {
+                "key": "field_66f43e34cfa5d",
+                "label": "پردازنده",
+                "name": "cpu",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_66f43e4fcfa5e",
+                "label": "رم",
+                "name": "ram",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_66f43e56cfa5f",
+                "label": "هارد",
+                "name": "hdd",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_66f46ccbfa63d",
+                "label": "توضیح محصول",
+                "name": "product_description",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 1,
+                "delay": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "product"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
         "key": "group_66e9a116911d5",
         "title": "Theme settings",
         "fields": [
@@ -819,7 +1006,7 @@
                         "key": "field_66ebb52a64211",
                         "label": "آیکن",
                         "name": "icon",
-                        "type": "text",
+                        "type": "image",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -828,11 +1015,16 @@
                             "class": "",
                             "id": ""
                         },
-                        "default_value": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "maxlength": ""
+                        "return_format": "url",
+                        "preview_size": "thumbnail",
+                        "library": "all",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": ""
                     },
                     {
                         "key": "field_66ebb53064212",
@@ -935,6 +1127,62 @@
                         "key": "field_66ed5970803c9",
                         "label": "لینک",
                         "name": "tag_link",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_66f47346af7a2",
+                "label": "محصولات",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_66f47353af7a3",
+                "label": "متن های تبلیغاتی صفحه محصول",
+                "name": "product_guarantee_texts",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_66f47383af7a4",
+                        "label": "عنوان",
+                        "name": "title",
                         "type": "text",
                         "instructions": "",
                         "required": 0,

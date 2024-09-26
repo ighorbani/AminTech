@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
 
   // Click event for backdrop (to close the menu)
   backdrop.on("click", function () {
-    burgerMenu.removeClass("open");
+    suggestionsContainer.slideUp();
     backdrop.fadeOut();
   });
 
@@ -107,5 +107,4 @@ jQuery(document).ready(function ($) {
 
   new Swiper(".tree-items-slider", treeItemsSlider);
   new Swiper(".one-item-slider", oneItemSlider);
-  new Swiper(".four-items-slider", fourItemsSlider);
 });

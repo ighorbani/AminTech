@@ -29,7 +29,9 @@
             </a>
 
             <div class="menu">
-                <a href="<?php echo ACCOUNT_LINK; ?>" class="login">ورود / ثبت نام</a>
+                <a class="login" href="<?php echo is_user_logged_in() ? ACCOUNT_LINK : LOGIN_LINK; ?>">
+                    <?php echo is_user_logged_in() ? 'حساب کاربری' : 'ورود / ثبت نام'; ?>
+                </a>
                 <a href="<?php echo CART_LINK; ?>" class="shopping-cart">
                     <span class="count">
                         <?php echo WC()->cart->get_cart_contents_count(); ?>

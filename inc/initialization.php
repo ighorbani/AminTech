@@ -59,14 +59,14 @@ add_action('phpmailer_init', 'custom_smtp_settings');
 function custom_smtp_settings($phpmailer)
 {
     $phpmailer->isSMTP();
-    $phpmailer->Host = 'mail.amin-rayaneh.ir';
+    $phpmailer->Host = get_option('email_host', 'option');
     $phpmailer->SMTPAuth = true;
     $phpmailer->Port = 465;
-    $phpmailer->Username = 'contact@amin-rayaneh.ir';
-    $phpmailer->Password = '@=ILA7=T&&9N';
+    $phpmailer->Username = get_option('email_user', 'option');
+    $phpmailer->Password = get_option('email_password', 'option');
     $phpmailer->SMTPSecure = 'ssl';
-    $phpmailer->From = 'contact@amin-rayaneh.ir';
-    $phpmailer->FromName = 'امین رایانه';
+    $phpmailer->From = get_option('email_from', 'option');
+    $phpmailer->FromName = get_option('email_from_name', 'option');
     $phpmailer->CharSet = 'UTF-8';
 }
 

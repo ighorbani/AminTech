@@ -29,10 +29,12 @@
             </a>
 
             <div class="menu">
-                <a class="login" id="loginButton">
-                    <!-- <a class="login" href="<?php echo ACCOUNT_LINK; ?>"> -->
-                    <?php echo is_user_logged_in() ? 'حساب کاربری' : 'ورود / ثبت نام'; ?>
-                </a>
+                <?php if (is_user_logged_in()): ?>
+                    <a class="login" href="<?php echo ACCOUNT_LINK; ?>"> حساب کاربری </a>
+                <?php else: ?>
+                    <a class="login" id="loginButton"> ورود / ثبت نام </a>
+                <?php endif; ?>
+
                 <a href="<?php echo CART_LINK; ?>" class="shopping-cart">
                     <span class="count">
                         <?php echo WC()->cart->get_cart_contents_count(); ?>
@@ -65,15 +67,13 @@
         <span class="x-button">
             <?php echo get_svg('x'); ?>
         </span>
-        <h5 class="modal-title">
-            ثبت نام / ورود
-        </h5>
-        <p class="description">برای تجربه ای بهتر در خریدتان، لطفا ابتدا وارد حسابتان شوید.</p>
-        <p class="label">شماره تلفن را وارد کنید</p>
-
         <form class="phone-form" action="" method="post">
+            <h5 class="modal-title"> ثبت نام / ورود </h5>
+            <p class="description">برای تجربه ای بهتر در خریدتان، لطفا ابتدا وارد حسابتان شوید.</p>
+            <p class="label">شماره تلفن را وارد کنید:</p>
+
             <div class="phone-field">
-                <input type="tel">
+                <input type="tel" class="phone-number-input">
                 <span class="pre-number">98+</span>
             </div>
             <span class="form-notice">با ثبت شماره با قوانین و مقررات امین رایانه موافقم.</span>
@@ -81,13 +81,20 @@
         </form>
 
         <form class="verification-form" action="" method="post">
+            <h5 class="modal-title"> کد تایید هویت </h5>
+            <p class="description">کد تایید به <span class="number"></span> ارسال شد. اشتباه وارد کردید؟</p>
+            <div class="edit-number-link">ویرایش شماره</div>
+            <p class="label">کد تایید را وارد کنید:</p>
+
             <div class="verification-set">
-                <input type="number">
+                <input type="text" class="verification-input">
                 <div class="send-again">ارسال مجدد</div>
             </div>
             <span class="form-notice"></span>
             <input type="submit" value="ورود به حساب" />
         </form>
+
+        <div class="suggestion-notice" style="display:none;"> با موفقیت وارد شدید، در حال ریدایرکت... </div>
     </div>
 
     <div id="backdrop"></div>

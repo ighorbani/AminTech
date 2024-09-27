@@ -5,6 +5,7 @@ jQuery(document).ready(function ($) {
   var backdrop = $("#backdrop");
   var loginButton = $("#loginButton");
   var loginModal = $(".login-modal");
+  var loginNotice = $(".login-modal .form-notice");
 
   searchInput.on("input", function () {
     var searchTerm = searchInput.val();
@@ -19,20 +20,25 @@ jQuery(document).ready(function ($) {
         },
         success: function (response) {
           suggestionsContainer.html(response);
-          suggestionsContainer.slideDown();
+          suggestionsContainer.fadeOut();
           backdrop.fadeIn();
         },
       });
     } else {
       suggestionsContainer.empty();
-      suggestionsContainer.slideUp();
+      suggestionsContainer.fadeIn();
       backdrop.fadeOut();
     }
   });
 
   // Click event for backdrop (to close the menu)
   backdrop.on("click", function () {
-    suggestionsContainer.slideUp();
+    suggestionsContainer.fadeIn();
+    backdrop.fadeOut();
+    loginModal.fadeOut();
+  });
+
+  $(".modal .x-button").on("click", function () {
     backdrop.fadeOut();
     loginModal.fadeOut();
   });
@@ -58,10 +64,24 @@ jQuery(document).ready(function ($) {
     backdrop.fadeIn();
   });
 
+  // Edit login number
+  $(".login-modal .edit-number-link").click(function () {
+    $(".phone-form").show();
+    $(".verification-form").hide();
+  });
+
+  // $(".login-modal .edit-number-link").click(function () {
+  // });
+
   // ارسال شماره تلفن
   $(".phone-form").submit(function (e) {
     e.preventDefault();
-    var phoneNumber = $('input[type="tel"]').val();
+    var phoneNumber = $("input.phone-number-input").val();
+
+    // if (phoneNumber.length < 10) {
+    //   loginNotice.addClass("error").text("شماره تماس حداقل باید 10 عدد باشد");
+    //   return;
+    // }
 
     if (phoneNumber) {
       $.ajax({
@@ -72,15 +92,20 @@ jQuery(document).ready(function ($) {
           phone: phoneNumber,
         },
         success: function (response) {
+          response = response.trim();
+          response = JSON.parse(response);
           if (response.status === "success") {
             $(".phone-form").hide();
             $(".verification-form").show();
+            $(".login-modal .description .number").text(phoneNumber);
           } else {
-            alert("خطایی رخ داد. لطفا دوباره تلاش کنید.");
+            loginNotice
+              .addClass("error")
+              .text("خطایی رخ داد، لطفا دوباره تلاش کنید.");
           }
         },
         error: function () {
-          alert("خطا در ارسال پیامک");
+          loginNotice.addClass("error").text("خطا در ارسال پیامک");
         },
       });
     }
@@ -89,30 +114,92 @@ jQuery(document).ready(function ($) {
   // ارسال کد تایید برای بررسی
   $(".verification-form").submit(function (e) {
     e.preventDefault();
-    var verificationCode = $('input[type="number"]').val();
+    var verificationCode = $("input.verification-input").val();
 
     if (verificationCode) {
       $.ajax({
         url: ajax_object.ajax_url,
         method: "POST",
         data: {
-          action: "verify-code",
+          action: "verify_code",
           code: verificationCode,
         },
         success: function (response) {
+          response = response.trim();
+          response = JSON.parse(response);
           if (response.status === "success") {
-            alert("ورود موفق");
+            $(".verification-form").hide();
+            $(".login-modal .suggestion-notice").css("display", "block");
+
+            setTimeout(function () {
+              window.location.href = response.redirect_address;
+            }, 1000);
           } else {
-            alert("کد تایید اشتباه است");
+            loginNotice.addClass("error").text("کد تایید اشتباه است.");
           }
         },
         error: function () {
-          alert("خطا در بررسی کد تایید");
+          loginNotice.addClass("error").text("خطا در بررسی کد تایید.");
         },
       });
     }
   });
 
+  $(".login-modal .send-again").on("click", function () {
+    var phone =
+      "<?php echo htmlspecialchars($_COOKIE['login-phone-number']); ?>";
+
+    $.ajax({
+      url: ajax_object.ajax_url,
+      method: "POST",
+      data: {
+        action: "send_verification_code",
+        phone: phone,
+      },
+      success: function () {
+        $(".form-notice").text("کد تأیید جدید ارسال شد.");
+      },
+      error: function () {
+        $(".form-notice").text("خطا در ارسال کد تأیید.");
+      },
+    });
+  });
+
+  // When click on the product gallery thumbnail
+  $(".thumbnails .item").on("click", function () {
+    var fullImageUrl = $(this).data("full");
+    $(".image").css("background-image", "url(" + fullImageUrl + ")");
+  });
+
+  // Add product to the cart
+  $(".buy-button").on("click", function (e) {
+    e.preventDefault();
+
+    var product_id = $(this).data("product-id");
+    var button = $(this);
+
+    $.ajax({
+      type: "POST",
+      url: ajax_object.wc_ajax_url,
+      data: {
+        action: "woocommerce_ajax_add_to_cart",
+        product_id: product_id,
+      },
+      success: function (response) {
+        if (!response.error) {
+          alert("محصول به سبد خرید اضافه شد!");
+
+          $(document.body).trigger("added_to_cart", [
+            response.fragments,
+            response.cart_hash,
+            button,
+          ]);
+        } else {
+          alert("خطا در افزودن محصول به سبد خرید.");
+        }
+      },
+    });
+  });
 });
 
 function updatePriceRange(value) {

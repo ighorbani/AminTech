@@ -61,18 +61,48 @@ get_header(); ?>
                     $product_image = wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'single-post-thumbnail');
                     $stock_quantity = $product->get_stock_quantity();
                     $product_price = strip_tags(wc_price($product->get_price()));
+
+                    $regular_price = $product->get_regular_price();
+                    $sale_price = $product->get_sale_price();
                     ?>
 
                     <a href="<?php the_permalink(); ?>" class="product-item swiper-slide">
-                        <!-- <div class="discount-time">97:32:41</div> -->
+                        <?php if ($sale_price && $regular_price > $sale_price): ?>
+                            <div class="discount-time"><?php echo get_svg('discount'); ?></div>
+                        <?php endif; ?>
+
                         <div class="image" style="background-image: url('<?php echo $product_image[0]; ?>');"></div>
+                        <?php $main_features = get_field('main_features'); ?>
+                        <?php if ($main_features): ?>
+                            <div class="features-summary">
+                                <?php foreach ($main_features as $main_feature): ?>
+                                    <div><img src="<?php echo $main_feature['icon']; ?>" />
+                                        <p><?php echo $main_feature['title']; ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
                         <h3><?php echo get_the_title(); ?></h3>
-                        <span class="count"><?php echo ($stock_quantity ? $stock_quantity . ' عدد' : 'ناموجود'); ?></span>
-                        <!-- <div class="discount-flex">
-                            <span class="discount-percent">4%</span>
-                            <span class="previous-price">768, 0000 تومان</span>
-                        </div> -->
-                        <span class="price"><?php echo $product_price; ?></span>
+                        <div class="product-info">
+                            <span class="count <?php echo $stock_quantity ? 'available' : ''; ?>">
+                                <?php echo ($stock_quantity ? $stock_quantity . ' عدد موجود' : 'ناموجود'); ?>
+                            </span>
+
+                            <?php if ($regular_price && $sale_price):
+                                $discount_percentage = round((($regular_price - $sale_price) / $regular_price) * 100);
+                                ?>
+                                <div class="discount-flex">
+                                    <span class="discount-percent">
+                                        <span><?php echo $discount_percentage; ?>%</span>
+                                    </span>
+                                    <span class="previous-price"><?php echo $product_price; ?></span>
+                                </div>
+                                <span class="price"><?php echo strip_tags(wc_price($sale_price)); ?></span>
+                            <?php else: ?>
+                                <span class="price"><?php echo $product_price; ?></span>
+                            <?php endif; ?>
+                        </div>
                     </a>
                     <?php
                 endwhile;
@@ -116,13 +146,48 @@ get_header(); ?>
                 $product_image = wp_get_attachment_image_src(get_post_thumbnail_id($product->get_id()), 'single-post-thumbnail');
                 $stock_quantity = $product->get_stock_quantity();
                 $product_price = strip_tags(wc_price($product->get_price()));
+
+                $regular_price = $product->get_regular_price();
+                $sale_price = $product->get_sale_price();
                 ?>
 
                 <a href="<?php the_permalink(); ?>" class="product-item swiper-slide">
+                    <?php if ($sale_price && $regular_price > $sale_price): ?>
+                        <div class="discount-time"><?php echo get_svg('discount'); ?></div>
+                    <?php endif; ?>
+
                     <div class="image" style="background-image: url('<?php echo $product_image[0]; ?>');"></div>
+                    <?php $main_features = get_field('main_features'); ?>
+                    <?php if ($main_features): ?>
+                        <div class="features-summary">
+                            <?php foreach ($main_features as $main_feature): ?>
+                                <div><img src="<?php echo $main_feature['icon']; ?>" />
+                                    <p><?php echo $main_feature['title']; ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <h3><?php echo get_the_title(); ?></h3>
-                    <span class="count"><?php echo ($stock_quantity ? $stock_quantity . ' عدد' : 'ناموجود'); ?></span>
-                    <span class="price"><?php echo $product_price; ?></span>
+                    <div class="product-info">
+                        <span class="count <?php echo $stock_quantity ? 'available' : ''; ?>">
+                            <?php echo ($stock_quantity ? $stock_quantity . ' عدد موجود' : 'ناموجود'); ?>
+                        </span>
+
+                        <?php if ($regular_price && $sale_price):
+                            $discount_percentage = round((($regular_price - $sale_price) / $regular_price) * 100);
+                            ?>
+                            <div class="discount-flex">
+                                <span class="discount-percent">
+                                    <span><?php echo $discount_percentage; ?>%</span>
+                                </span>
+                                <span class="previous-price"><?php echo $product_price; ?></span>
+                            </div>
+                            <span class="price"><?php echo strip_tags(wc_price($sale_price)); ?></span>
+                        <?php else: ?>
+                            <span class="price"><?php echo $product_price; ?></span>
+                        <?php endif; ?>
+                    </div>
                 </a>
                 <?php
             endwhile;

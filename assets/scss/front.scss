@@ -1510,18 +1510,6 @@ a {
         margin-top: 20px;
       }
 
-      .suggestion-notice {
-        border-radius: 8px;
-        border: 1px solid rgba($yellow, 1);
-        padding: 15px;
-        background-color: rgba($yellow, 0.1);
-        font-size: 16px;
-        color: black;
-        line-height: 1.8;
-        text-align: justify;
-        font-family: $r;
-      }
-
       .regular-title {
         margin-top: 0;
       }
@@ -1727,21 +1715,27 @@ a {
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
+      transition: 0.5s all ease-out;
     }
 
     .thumbnails {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      // overflow-x: scroll;
+      flex-wrap: wrap;
 
       .item {
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
-        width: 35px;
-        height: 35px;
+        border: 1px solid rgba($gray5, 0.3);
+        width: 55px;
+        height: 55px;
         cursor: pointer;
+        margin-top: 12px;
+        border-radius: 6px;
+        background-color: white;
+        margin-left: 8px;
       }
     }
   }
@@ -1757,7 +1751,7 @@ a {
       flex: 0 0 60%;
 
       .breadcrumb {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
 
         a {
           font-size: 16px;
@@ -1881,15 +1875,15 @@ a {
         padding: 12px 0;
 
         svg {
-          fill: $yellow;
+          fill: $gray4;
           width: 20px;
           height: auto;
           margin-left: 6px;
         }
 
         p {
-          color: $gray1;
-          font: 16px $m;
+          color: $gray3;
+          font: 16px $r;
         }
       }
 
@@ -2023,20 +2017,26 @@ a {
 
 .product-item {
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px 20px 140px;
   border: 1px solid rgba($gray5, 0.8);
   position: relative;
   height: auto;
 
   .discount-time {
-    color: $red;
-    text-align: left;
-    font: 16px $m;
+    // color: $red;
+    // text-align: left;
+    // font: 15px $r;
     position: absolute;
-    top: 25px;
-    left: 25px;
-    border-bottom: 1.5px solid $red;
-    padding-bottom: 0px;
+    top: 20px;
+    left: 20px;
+    // border-bottom: 1px solid $red;
+    // padding-bottom: 0px;
+
+    svg {
+      fill: $red;
+      width: 36px;
+      height: auto;
+    }
   }
 
   .image {
@@ -2049,52 +2049,108 @@ a {
     margin-bottom: 15px;
   }
 
-  h3,
-  h3 a {
-    // color: $blue;
-    font: 16px $m;
-    margin-bottom: 5px;
-  }
-
-  .count {
-    font: 16px $r;
-    display: block;
-    color: $red;
-  }
-
-  .discount-flex {
+  .features-summary {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    margin: 12px 0;
+    justify-content: space-between;
+    background-color: $gray7;
+    border-radius: 8px;
+    margin: 15px 0 20px;
 
-    .discount-percent {
-      background-color: $red;
-      border-radius: 6px;
+    div {
+      flex: 0 0 33%;
+      padding: 8px 6px;
       text-align: center;
-      color: white;
-      font: 15px $m;
-      width: 32px;
-      height: 32px;
-      margin-left: 12px;
-      display: block;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    .previous-price {
-      font: 15px $l;
-      color: $gray4;
+      img {
+        width: 30px;
+        height: auto;
+      }
+
+      p {
+        text-align: center;
+        font: 14px $r;
+        color: $gray4;
+        margin-top: -5px;
+      }
     }
   }
 
-  .price {
-    font: 18px $m;
-    display: block;
-    color: black;
-    margin-top: 10px;
-    text-align: left;
+  h3,
+  h3 a {
+    font: 16px $m;
+    margin-bottom: 5px;
+    color: $gray3;
+  }
+
+  .product-info {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+    .count {
+      font: 16px $r;
+      display: block;
+      color: $red;
+
+      &.available {
+        color: #10b045;
+        background-color: rgba($green, 0.07);
+        padding: 3px 10px;
+        border-radius: 6px;
+        width: fit-content;
+      }
+    }
+
+    .discount-flex {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 12px 0;
+
+      .discount-percent {
+        background-color: rgba($red, 0.9);
+        border-radius: 6px;
+        text-align: center;
+        color: white;
+        padding: 2px 8px;
+        margin-left: 12px;
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          font: 16px $r;
+        }
+      }
+
+      .previous-price {
+        font: 15px $l;
+        color: $gray3;
+        position: relative;
+
+        &:after {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 1px;
+          background-color: $gray5;
+          position: absolute;
+          top: 52%;
+          left: 0;
+        }
+      }
+    }
+
+    .price {
+      font: 18px $m;
+      display: block;
+      color: black;
+      margin-top: 10px;
+      text-align: left;
+      display: block;
+    }
   }
 }
 
@@ -2121,7 +2177,7 @@ a {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 600px;
+  width: 450px;
   transform: translate(-50%, -50%);
   z-index: 1002;
 
@@ -2145,20 +2201,34 @@ a {
 
     svg {
       fill: black;
-      width: 13px;
+      width: 10px;
       height: auto;
     }
   }
 
   .label {
     margin-top: 15px;
+    font: 14px $m;
+    color: $gray1;
+  }
+
+  .edit-number-link {
+    border-bottom: 1px solid black;
+    color: black;
     font: 15px $r;
-    color: $gray3;
+    margin: 10px 0;
+    width: fit-content;
+    cursor: pointer;
   }
 
   .description {
     font: 16px $r;
     color: $gray3;
+
+    .number {
+      color: $blue;
+      font: 16px $r;
+    }
   }
 }
 
@@ -2173,12 +2243,16 @@ a {
     .form-notice {
       display: block;
       font: 14px $r;
-      color: $gray3;
+      color: $gray4;
       margin: 10px 0;
+
+      &.error {
+        color: $red;
+      }
     }
 
     input[type="tel"],
-    input[type="number"] {
+    input[type="text"] {
       background-color: white !important;
       border: 1px solid $gray5;
       border-radius: 6px;
@@ -2187,16 +2261,16 @@ a {
       line-height: normal;
       padding: 10px 15px;
       flex: 1 0 70%;
-    }
-
-    input[type="tel"] {
-      border: none;
 
       &:active,
       &:focus,
       &:focus-visible {
-        border: none !important;
+        outline: none;
       }
+    }
+
+    input[type="tel"] {
+      border: none;
     }
 
     input[type="submit"] {
@@ -2207,7 +2281,7 @@ a {
       line-height: normal;
       padding: 10px 20px;
       min-width: 150px;
-      margin-top: 20px;
+      margin-top: 15px;
       width: 100%;
       cursor: pointer;
       appearance: none;
@@ -2231,6 +2305,7 @@ a {
         margin-right: 15px;
         font: 16px $m;
         cursor: pointer;
+        white-space: nowrap;
       }
     }
 
@@ -2256,5 +2331,24 @@ a {
         border-right: 1px solid rgba($gray5, 0.3);
       }
     }
+  }
+}
+
+.suggestion-notice {
+  border-radius: 8px;
+  border: 1px solid rgba($yellow, 1);
+  padding: 15px;
+  background-color: rgba($yellow, 0.1);
+  font-size: 16px;
+  color: black;
+  line-height: 1.8;
+  text-align: justify;
+  font-family: $r;
+}
+
+.related-products-section {
+  .items-slider {
+    position: relative;
+    padding-bottom: 70px;
   }
 }

@@ -129,6 +129,7 @@ jQuery(document).ready(function ($) {
           response = JSON.parse(response);
           if (response.status === "success") {
             $(".verification-form").hide();
+            $(".modal .x-button").hide();
             $(".login-modal .suggestion-notice").css("display", "block");
 
             setTimeout(function () {
@@ -174,29 +175,23 @@ jQuery(document).ready(function ($) {
   // Add product to the cart
   $(".buy-button").on("click", function (e) {
     e.preventDefault();
-
     var product_id = $(this).data("product-id");
-    var button = $(this);
 
     $.ajax({
       type: "POST",
-      url: ajax_object.wc_ajax_url,
+      url: ajax_object.ajax_url,
       data: {
         action: "woocommerce_ajax_add_to_cart",
         product_id: product_id,
       },
-      success: function (response) {
-        if (!response.error) {
-          alert("محصول به سبد خرید اضافه شد!");
-
-          $(document.body).trigger("added_to_cart", [
-            response.fragments,
-            response.cart_hash,
-            button,
-          ]);
-        } else {
-          alert("خطا در افزودن محصول به سبد خرید.");
-        }
+      success: function () {
+        var currentCount = parseInt($(".shopping-cart .count").text()) || 0;
+        var newCount = currentCount + 1;
+        $(".shopping-cart .count").text(newCount);
+        $(".shopping-cart").addClass("animation");
+        setTimeout(function () {
+          $(".shopping-cart").removeClass("animation");
+        }, 800);
       },
     });
   });

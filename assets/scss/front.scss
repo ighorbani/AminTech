@@ -184,7 +184,7 @@ a {
         transition: 0.3s all ease-out;
         font: 16px $m;
         color: black;
-        margin-left: 12px;
+        margin-left: 15px;
         cursor: pointer;
       }
 
@@ -197,6 +197,7 @@ a {
         justify-content: center;
         position: relative;
         border-radius: 6px;
+        transition: 0.3s all ease-out;
 
         .count {
           position: absolute;
@@ -209,6 +210,7 @@ a {
           width: 18px;
           height: 18px;
           text-align: center;
+          transition: 0.3s all ease-out;
         }
 
         svg {
@@ -217,6 +219,21 @@ a {
           height: auto;
           fill: black;
           transform: scaleX(-1);
+          transition: 0.3s all ease-out;
+        }
+
+        &.animation {
+          border-color: $red;
+          background-color: $red;
+          transform: rotate(-15deg);
+
+          svg {
+            fill: white;
+          }
+
+          .count {
+            background-color: black;
+          }
         }
       }
     }
@@ -2336,11 +2353,11 @@ a {
 
 .suggestion-notice {
   border-radius: 8px;
-  border: 1px solid rgba($yellow, 1);
+  border: 1px solid rgba($red, 0.5);
   padding: 15px;
-  background-color: rgba($yellow, 0.1);
+  background-color: rgba($red, 0.05);
   font-size: 16px;
-  color: black;
+  color: red;
   line-height: 1.8;
   text-align: justify;
   font-family: $r;
@@ -2350,5 +2367,60 @@ a {
   .items-slider {
     position: relative;
     padding-bottom: 70px;
+  }
+}
+
+.person-info-box {
+  // border: 1px solid rgba($gray5, 0.4);
+  background-color: $gray7;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+
+  img {
+    width: 55px;
+    height: auto;
+    margin-left: 25px;
+  }
+
+  .edit-account {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: rgba($blue, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    width: 45px;
+    height: 45px;
+
+    svg {
+      fill: $blue;
+      width: 18px;
+      height: auto;
+    }
+  }
+
+  .texts {
+    p {
+      font: 16px $m;
+      color: $blue;
+
+      span {
+        color: $gray4;
+        font: 16px $m;
+      }
+    }
+
+    blockquote {
+      display: block;
+      color: $gray4;
+      font: 16px $m;
+    }
   }
 }

@@ -22,7 +22,6 @@ function theme_enqueue_scripts()
 
     wp_localize_script('front', 'ajax_object', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'wc_ajax_url' => WC_AJAX::get_endpoint('%%endpoint%%'),
     ));
 
 }

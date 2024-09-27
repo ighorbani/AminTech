@@ -36,3 +36,5 @@ require_once('inc/woocommerce.php');
 require_once('inc/ajax.php');
 
 
+// SMS functionalities
+require_once('inc/sms.php');

@@ -3,6 +3,8 @@ jQuery(document).ready(function ($) {
   var searchInput = $("#search-input");
   var suggestionsContainer = $("#search-suggestions");
   var backdrop = $("#backdrop");
+  var loginButton = $("#loginButton");
+  var loginModal = $(".login-modal");
 
   searchInput.on("input", function () {
     var searchTerm = searchInput.val();
@@ -32,6 +34,7 @@ jQuery(document).ready(function ($) {
   backdrop.on("click", function () {
     suggestionsContainer.slideUp();
     backdrop.fadeOut();
+    loginModal.fadeOut();
   });
 
   // Wide main menu interaction
@@ -44,67 +47,143 @@ jQuery(document).ready(function ($) {
     }
   );
 
-  // Define Slider Options
-  var oneItemSlider = {
-    loop: true,
-    cssMode: true,
-    slidesPerView: 1,
-    spaceBetween: 10,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-      dynamicBullets: true,
-    },
-    breakpoints: {
-      600: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-      },
-      800: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-      },
-      1275: {
-        slidesPerView: 1,
-        spaceBetween: 10,
-      },
-    },
-  };
+  // Move the title of account page
+  if ($("div.account-page").length) {
+    var title = $("h2.regular-title").detach();
+    $(".woocommerce-MyAccount-content").prepend(title);
+  }
 
-  var treeItemsSlider = {
-    loop: false,
-    cssMode: true,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-      dynamicBullets: true,
-    },
-    breakpoints: {
-      600: {
-        slidesPerView: 1,
-        spaceBetween: 20,
-      },
-      800: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      1275: {
-        slidesPerView: 3,
-        spaceBetween: 20,
-      },
-    },
-  };
+  loginButton.on("click", function () {
+    loginModal.fadeIn();
+    backdrop.fadeIn();
+  });
 
-  new Swiper(".tree-items-slider", treeItemsSlider);
-  new Swiper(".one-item-slider", oneItemSlider);
+  // ارسال شماره تلفن
+  $(".phone-form").submit(function (e) {
+    e.preventDefault();
+    var phoneNumber = $('input[type="tel"]').val();
+
+    if (phoneNumber) {
+      $.ajax({
+        url: ajax_object.ajax_url,
+        method: "POST",
+        data: {
+          action: "send_verification_code",
+          phone: phoneNumber,
+        },
+        success: function (response) {
+          if (response.status === "success") {
+            $(".phone-form").hide();
+            $(".verification-form").show();
+          } else {
+            alert("خطایی رخ داد. لطفا دوباره تلاش کنید.");
+          }
+        },
+        error: function () {
+          alert("خطا در ارسال پیامک");
+        },
+      });
+    }
+  });
+
+  // ارسال کد تایید برای بررسی
+  $(".verification-form").submit(function (e) {
+    e.preventDefault();
+    var verificationCode = $('input[type="number"]').val();
+
+    if (verificationCode) {
+      $.ajax({
+        url: ajax_object.ajax_url,
+        method: "POST",
+        data: {
+          action: "verify-code",
+          code: verificationCode,
+        },
+        success: function (response) {
+          if (response.status === "success") {
+            alert("ورود موفق");
+          } else {
+            alert("کد تایید اشتباه است");
+          }
+        },
+        error: function () {
+          alert("خطا در بررسی کد تایید");
+        },
+      });
+    }
+  });
+
 });
+
+function updatePriceRange(value) {
+  // فرض کنید اسلایدر یک مقدار دارد، اینجا به سادگی مقدار را به دو قسمت تقسیم می‌کنیم
+  var minPrice = Math.max(10000, value * 0.25); // حداقل قیمت
+  var maxPrice = Math.min(100000000, value * 4); // حداکثر قیمت
+
+  document.getElementById("min_price_output").value = minPrice;
+  document.getElementById("max_price_output").value = maxPrice;
+}
+
+// Define Slider Options
+var oneItemSlider = {
+  loop: true,
+  cssMode: true,
+  slidesPerView: 1,
+  spaceBetween: 10,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    dynamicBullets: true,
+  },
+  breakpoints: {
+    600: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    800: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    1275: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+  },
+};
+
+var treeItemsSlider = {
+  loop: false,
+  cssMode: true,
+  slidesPerView: 1,
+  spaceBetween: 20,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    dynamicBullets: true,
+  },
+  breakpoints: {
+    600: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    800: {
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    1275: {
+      slidesPerView: 3,
+      spaceBetween: 20,
+    },
+  },
+};
+
+new Swiper(".tree-items-slider", treeItemsSlider);
+new Swiper(".one-item-slider", oneItemSlider);

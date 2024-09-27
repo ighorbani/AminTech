@@ -29,7 +29,8 @@
             </a>
 
             <div class="menu">
-                <a class="login" href="<?php echo is_user_logged_in() ? ACCOUNT_LINK : LOGIN_LINK; ?>">
+                <a class="login" id="loginButton">
+                    <!-- <a class="login" href="<?php echo ACCOUNT_LINK; ?>"> -->
                     <?php echo is_user_logged_in() ? 'حساب کاربری' : 'ورود / ثبت نام'; ?>
                 </a>
                 <a href="<?php echo CART_LINK; ?>" class="shopping-cart">
@@ -58,6 +59,35 @@
 
             </div>
         <?php endforeach; ?>
+    </div>
+
+    <div class="login-modal modal">
+        <span class="x-button">
+            <?php echo get_svg('x'); ?>
+        </span>
+        <h5 class="modal-title">
+            ثبت نام / ورود
+        </h5>
+        <p class="description">برای تجربه ای بهتر در خریدتان، لطفا ابتدا وارد حسابتان شوید.</p>
+        <p class="label">شماره تلفن را وارد کنید</p>
+
+        <form class="phone-form" action="" method="post">
+            <div class="phone-field">
+                <input type="tel">
+                <span class="pre-number">98+</span>
+            </div>
+            <span class="form-notice">با ثبت شماره با قوانین و مقررات امین رایانه موافقم.</span>
+            <input type="submit" value="دریافت کد تایید" />
+        </form>
+
+        <form class="verification-form" action="" method="post">
+            <div class="verification-set">
+                <input type="number">
+                <div class="send-again">ارسال مجدد</div>
+            </div>
+            <span class="form-notice"></span>
+            <input type="submit" value="ورود به حساب" />
+        </form>
     </div>
 
     <div id="backdrop"></div>
